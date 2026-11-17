@@ -1,6 +1,6 @@
-# Public beta
+# Usage limits
 
-The SYNCRONIX Research Agent is free to use during the public beta, within limits that keep it available to
+The SYNCRONIX Research Agent is free to use, within limits that keep it available to
 everyone and its costs predictable.
 
 ## Limits

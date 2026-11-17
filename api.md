@@ -1,6 +1,6 @@
 # Public API
 
-Base URL: `https://syncronixai.xyz`. No key is needed during the public beta; [limits](public-beta.md) apply.
+Base URL: `https://syncronixai.xyz`. No key is needed; [limits](limits.md) apply.
 All responses are JSON unless noted. Times are UTC.
 
 ## `GET /api/health`

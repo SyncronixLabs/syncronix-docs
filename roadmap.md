@@ -4,7 +4,7 @@ Status as of November 2026. Items move from *planned* to *live* only when they r
 
 ## Live
 
-- **Research agent, free public beta** — web search, page reading, cross-checking, grounded reports with source
+- **Research agent, free** — web search, page reading, cross-checking, grounded reports with source
   verification, live progress streaming, private per-browser history.
 - **Multi-agent runs** — Researcher, Analyst and Verifier on every run, inside one per-run cost ceiling.
 - **Output verification** — the Analyst extracts checkable claims with verbatim quotes; the Verifier matches each
@@ -23,6 +23,6 @@ Status as of November 2026. Items move from *planned* to *live* only when they r
   Enabled only after a real transaction is verified end to end.
 - **Execution on Robinhood Chain** — policy-bound execution of approved actions on Robinhood Chain, an Ethereum
   Layer 2 built on Arbitrum, with simulation before signing and a receipt for every action.
-- **Accounts and higher limits** beyond the free beta.
+- **Accounts and higher limits** beyond the free tier.
 
 Follow updates on [X / @SyncronixHq](https://x.com/SyncronixHq).

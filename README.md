@@ -12,7 +12,7 @@
 ---
 
 > [!NOTE]
-> **Live:** the SYNCRONIX free public beta at [syncronixai.xyz](https://syncronixai.xyz): Researcher, Analyst and
+> **Live:** SYNCRONIX at [syncronixai.xyz](https://syncronixai.xyz): Researcher, Analyst and
 > Verifier agents on every run, with read-only Robinhood Chain data. **Not live yet:** wallet transfers.
 > **Planned:** on-chain execution. SYNCRONIX holds no keys and sends no transactions.
 >
@@ -25,7 +25,7 @@
 | 🏗️ [Architecture](architecture.md) | Components, request flow, data model, deployment shape |
 | 🧠 [Research agent](research-agent.md) | Research protocol, tools, read gate, grounding and source verification, cost ceiling |
 | 🔌 [Public API](api.md) | Endpoints, Server-Sent Events, refusal codes, examples |
-| 🎟️ [Public beta](public-beta.md) | Limits, what is stored, privacy, fair use |
+| 🎟️ [Usage limits](limits.md) | Limits, what is stored, privacy, fair use |
 | 🛡️ [Security model](security.md) | Threats, controls, known limitations, reporting a vulnerability |
 | 🗺️ [Roadmap](roadmap.md) | What is live, what is planned |
 
@@ -36,7 +36,7 @@
 
 Open the [live console](https://syncronixai.xyz/platform#console), describe what you want researched and press
 **Run agent**. You get one free run per day; the console shows your remaining run and when it resets. Your reports
-stay in **History**, visible only in your browser. See [Public beta](public-beta.md).
+stay in **History**, visible only in your browser. See [Usage limits](limits.md).
 
 </details>
 

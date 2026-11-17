@@ -23,7 +23,7 @@ history, and the availability of the service.
 
 ## Known limitations
 
-- An actor controlling many networks could use up the shared daily budget, which locks the beta for others until
+- An actor controlling many networks could use up the shared daily budget, which locks the service for others until
   00:00 UTC. Spend can never exceed the budget.
 - Visitors behind one shared address share one daily run.
 
