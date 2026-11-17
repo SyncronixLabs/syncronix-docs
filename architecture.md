@@ -25,7 +25,9 @@ PostgreSQL
 | Console UI | Task input, live progress (plan → research → analyze → deliver), report rendering (no raw HTML, http(s) links only), private history, limit notices |
 | Runs API | Starts runs and streams events; lists and opens the visitor's own runs; reports the visitor's quota |
 | Admission | One PostgreSQL transaction under an advisory lock decides whether a run may start and records its cost reserve |
-| Agent loop | Calls the model with the research protocol, streams tool use and text, enforces the read gate and cost ceiling, verifies sources |
+| Agent loop (Researcher) | Calls the model with the research protocol, streams tool use and text, enforces the read gate and cost ceiling, verifies sources |
+| Analyst and Verifier | Analyst extracts checkable claims with verbatim quotes; Verifier matches quotes against fetched page text, cross-checks facts across independent domains and judges support from the evidence only |
+| Chain reads | Read-only Robinhood Chain RPC (official endpoints, method allowlist, chain ID checked); results added as research evidence |
 | Accounting | Records token usage split (uncached, cache read, cache write, output), searches and estimated cost per run |
 
 ## Request flow of a run
