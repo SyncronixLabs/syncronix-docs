@@ -12,7 +12,8 @@ Status as of November 2026. Items move from *planned* to *live* only when they r
 
 ## Planned
 
-- **Settlement on Kinetiq Elysium** — recording and settling agent work on-chain. Not live: the console has no
+- **Execution on Robinhood Chain** — policy-bound execution of approved actions on Robinhood Chain, an Ethereum
+  Layer 2 built on Arbitrum. Not live: SYNCRONIX has no chain integration, and the console has no
   wallet and sends no transactions.
 - **Coordination of multiple agents** on one objective.
 - **Verification** of agent outputs beyond source tracing.

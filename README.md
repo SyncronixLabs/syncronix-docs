@@ -13,7 +13,10 @@
 
 > [!NOTE]
 > **Live:** the SYNCRONIX Research Agent, a free public beta at [syncronixai.xyz](https://syncronixai.xyz).
-> **Planned:** execution and settlement on Kinetiq Elysium. The console has no wallet and sends no transactions.
+> **Planned:** on-chain execution on Robinhood Chain (an Ethereum Layer 2 built on Arbitrum). The console has no
+> wallet, sends no transactions and has no chain integration.
+>
+> SYNCRONIX is an independent project and is not affiliated with, endorsed by or partnered with Robinhood Markets, Inc. or its affiliates. Robinhood and Robinhood Chain are trademarks of their respective owners.
 
 ## Contents
 
