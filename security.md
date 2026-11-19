@@ -2,7 +2,7 @@
 
 ## Assets
 
-The AI provider API key and database credentials (server-side only), the daily budget, visitors' private run
+The AI provider API key, the blockchain indexer API key and database credentials (server-side only), the daily budget, visitors' private run
 history, and the availability of the service.
 
 ## Controls
@@ -20,12 +20,21 @@ history, and the availability of the service.
 | Admin key guessing | Constant-time comparison; 10 failures from one network lock it out for 15 minutes; a wrong key is never treated as a visitor. |
 | Transport and browser | HTTPS with HSTS, Content-Security-Policy, X-Frame-Options DENY, nosniff, strict referrer policy, nginx request rate limiting. |
 | Data loss | Daily database backups with 14-day retention; immutable releases with one-step rollback. |
+| Indexer key exposure | The Blockscout key is added to upstream requests on the server only. It is never sent to browsers, returned in responses or written to logs; automated tests check responses for it. |
+| Indexer misuse (SSRF, cost) | Fixed allowlist of indexer paths and validated query parameters; per-lookup call budgets, a daily call allowance and a floor on the indexer's remaining credits; 30 lookups and 6 traces per minute per visitor, 3 traces at once. |
+| Unwanted AI spend | Wallet data and graphs never call a model. `GET /api/chain/analyze` returns an estimate only; `POST` is same-site only, sent only from an explicit click, and admitted atomically against the per-visitor and daily budgets. |
+| Hallucinated wallet facts | The AI receives only a fact sheet built in code; links and addresses in its answer that are not in the fact sheet are removed before display. Labels from explorers are sanitised and treated as data. |
+| Wallet transactions | Disabled in production. The server holds no keys and cannot sign or broadcast. |
 
 ## Known limitations
 
 - An actor controlling many networks could use up the shared daily budget, which locks the service for others until
   00:00 UTC. Spend can never exceed the budget.
 - Visitors behind one shared address share one daily run.
+- Indexed wallet data comes from a third party (Blockscout). It is cross-checked against the official RPC, but
+  completeness depends on the indexer; mainnet internal transactions are currently reported as still processing.
+- Wallet lookups are cached and counted in server memory. The indexer's own remaining-credit count, read on every
+  call, is the backstop for the daily allowance.
 
 ## Reporting a vulnerability
 

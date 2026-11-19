@@ -13,8 +13,9 @@
 
 > [!NOTE]
 > **Live:** SYNCRONIX at [syncronixai.xyz](https://syncronixai.xyz): Researcher, Analyst and
-> Verifier agents on every run, with read-only Robinhood Chain data. **Not live yet:** wallet transfers.
-> **Planned:** on-chain execution. SYNCRONIX holds no keys and sends no transactions.
+> Verifier agents on every run, read-only Robinhood Chain data, Wallet Intelligence, a 5-hop Funding Trace and
+> opt-in AI wallet analysis. **Not live yet:** wallet transfers (disabled). **Planned:** on-chain execution.
+> SYNCRONIX holds no keys and sends no transactions.
 >
 > SYNCRONIX is an independent project and is not affiliated with, endorsed by or partnered with Robinhood Markets, Inc. or its affiliates. Robinhood and Robinhood Chain are trademarks of their respective owners.
 
@@ -24,6 +25,7 @@
 |---|---|
 | 🏗️ [Architecture](architecture.md) | Components, request flow, data model, deployment shape |
 | 🧠 [Research agent](research-agent.md) | Research protocol, tools, read gate, grounding and source verification, cost ceiling |
+| 🔎 [Wallet Intelligence](wallet-intelligence.md) | Activity, first funder, 5-hop funding trace, shared funders, verified vs. inferred, opt-in AI analysis, indexer limits |
 | 🔌 [Public API](api.md) | Endpoints, Server-Sent Events, refusal codes, examples |
 | 🎟️ [Usage limits](limits.md) | Limits, what is stored, privacy, fair use |
 | 🛡️ [Security model](security.md) | Threats, controls, known limitations, reporting a vulnerability |
@@ -57,6 +59,19 @@ Reference: [api.md](api.md). Working clients: [syncronix-examples](https://githu
 </details>
 
 <details>
+<summary><b>I want to look up a wallet</b></summary>
+
+Open the [platform page](https://syncronixai.xyz/platform), enter an address in **Address lookup** and pick
+**Activity** or **Funding trace**. Both are free and use no AI. **Analyze with AI** shows a cost estimate first and
+runs only when you click it. See [Wallet Intelligence](wallet-intelligence.md).
+
+```bash
+curl -s 'https://syncronixai.xyz/api/chain/wallet?network=mainnet&address=0x…&view=trace'
+```
+
+</details>
+
+<details>
 <summary><b>I want to understand the design</b></summary>
 
 Read [Architecture](architecture.md), then [Research agent](research-agent.md). The measurements behind the design
@@ -74,11 +89,14 @@ decisions are in [syncronix-research](https://github.com/SyncronixLabs/syncronix
 | **Read gate** | One follow-up turn that asks the agent to read sources if it tried to finish after reading fewer than two pages |
 | **Read vs. seen** | A *read* source was fetched and read; a *seen* source appeared only as a search result |
 | **Grounding line** | Pages read · findings citing a read page · findings without a link · single-source findings · cited passages |
+| **First funder** | The sender of an address's first ETH; *proven* only when the indexer's history up to that block is complete, otherwise *earliest found* |
+| **Verified vs. inferred** | *Verified* = an actual on-chain transfer with its link; *inferred* = a pattern such as a shared funder, never proof of common ownership |
 
 ## Conventions
 
 - All times are **UTC**; daily limits reset at **00:00 UTC**.
 - Costs are **list-price estimates** from usage reported by the AI provider.
+- Mainnet explorer links go to **Robinscan** (`robin.etherscan.io`); indexed data comes from the Blockscout API.
 - A feature is documented as *live* only when it runs in production.
 
 ## Related

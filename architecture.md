@@ -18,6 +18,19 @@ PostgreSQL
    runs, run_events
 ```
 
+Wallet lookups take a separate, read-only path:
+
+```
+Browser (Address lookup)
+   │  GET /api/chain/wallet?view=intel|trace     (no AI)
+   ▼
+Next.js API ── rate limits ── indexer client (path allowlist, call budgets, cache) ──► Blockscout API
+   │                         └─ RPC client (read-method allowlist, chain ID check) ──► Robinhood Chain RPC
+   │  GET  /api/chain/analyze   → cost estimate only (no AI)
+   └─ POST /api/chain/analyze   → only on the "Analyze with AI" click: same atomic admission as a run,
+                                  one Claude call over a fact sheet, links checked in code, saved to runs
+```
+
 ## Components
 
 | Component | Responsibility |
@@ -28,6 +41,9 @@ PostgreSQL
 | Agent loop (Researcher) | Calls the model with the research protocol, streams tool use and text, enforces the read gate and cost ceiling, verifies sources |
 | Analyst and Verifier | Analyst extracts checkable claims with verbatim quotes; Verifier matches quotes against fetched page text, cross-checks facts across independent domains and judges support from the evidence only |
 | Chain reads | Read-only Robinhood Chain RPC (official endpoints, method allowlist, chain ID checked); results added as research evidence |
+| Indexer client | Read-only Blockscout API client: fixed path allowlist, validated parameters, per-lookup call budgets, daily allowance, pacing, in-memory cache; the API key is added server-side only |
+| Wallet Intelligence | Activity and funding trace computed in code from indexed data, cross-checked against the RPC; graph with verified and inferred edges ([details](wallet-intelligence.md)) |
+| Wallet AI analysis | Opt-in only: a deterministic fact sheet, one `claude-haiku-5-5` call, links and addresses not in the fact sheet removed in code |
 | Accounting | Records token usage split (uncached, cache read, cache write, output), searches and estimated cost per run |
 
 ## Request flow of a run
@@ -44,7 +60,9 @@ PostgreSQL
 
 `runs` holds one row per run: task, status, report, sources (with verified/read flags), token usage, searches, pages
 read, estimated cost, duration, a hash of the browser's owner token and a keyed hash of the visitor's network.
-`run_events` holds the progress events used to replay a run in the console.
+`run_events` holds the progress events used to replay a run in the console. AI wallet analyses are stored as runs too,
+so they share the same budget accounting and private history. Wallet lookups themselves are not stored; they are
+cached in memory for minutes.
 
 ## Deployment shape
 
