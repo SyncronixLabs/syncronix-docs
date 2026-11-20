@@ -15,7 +15,8 @@
 > **Live:** SYNCRONIX at [syncronixai.xyz](https://syncronixai.xyz): Researcher, Analyst and
 > Verifier agents on every run, read-only Robinhood Chain data, Wallet Intelligence, a 5-hop Funding Trace and
 > opt-in AI wallet analysis, and **wallet transfers**: one native ETH transfer at a time that you confirm and sign in
-> your own wallet (mainnet and testnet). **Planned:** autonomous AI execution. SYNCRONIX holds no keys and never signs.
+> your own wallet (mainnet and testnet, verified on mainnet). **Planned:** autonomous AI
+> execution, where agents would plan actions on their own. SYNCRONIX holds no keys and never signs.
 >
 > SYNCRONIX is an independent project and is not affiliated with, endorsed by or partnered with Robinhood Markets, Inc. or its affiliates. Robinhood and Robinhood Chain are trademarks of their respective owners.
 

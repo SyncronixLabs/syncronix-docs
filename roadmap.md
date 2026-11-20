@@ -20,7 +20,8 @@ Status as of November 2026. Items move from *planned* to *live* only when they r
   cost estimate, inside the same per-visitor and daily budgets.
 - **Wallet transfers (Execution v1)** — one native ETH transfer at a time on mainnet and testnet: deterministic
   instruction parsing, server preview with live balance and gas, explicit confirmation, signing only in the user's
-  own wallet, receipt checked against the preview. [Details](wallet-transfers.md).
+  own wallet, receipt checked against the preview.
+  Verified on mainnet with a real transfer checked on the official RPC. Wallet-approved only: a person starts and signs every transfer. [Details](wallet-transfers.md).
 - **Cost and abuse controls** — atomic daily budget with per-run reserves, one run at a time, one run per visitor
   per day, origin and input validation.
 - **Operations** — HTTPS, daily database backups, immutable releases with rollback.

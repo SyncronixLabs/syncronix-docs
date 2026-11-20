@@ -60,8 +60,10 @@ Transfers on Robinhood Chain are final. SYNCRONIX cannot reverse, cancel or refu
 
 ## Verification
 
-- A real MetaMask-signed testnet transfer, checked on the official RPC: success, chain 46630, 0.001 ETH, fee
-  0.00000021 ETH (= the preview's estimate), gas limit and fee cap exactly as previewed.
+- **Mainnet (live):** a real wallet-approved transfer through production was checked on the official RPC: success on
+  chain 4663, a plain ETH transfer to a regular account within the cap, and the exact gas limit, fee cap and zero
+  tip from its preview, so it was sent as previewed. A person started, checked and signed it; no AI was involved.
+- **Testnet:** a real wallet-approved transfer, checked the same way on chain 46630.
 - Automated, without broadcasting: parser and checksum vectors, the mainnet configuration matrix, caps, contract and
   chain-ID refusals, and the browser flow with a mock wallet against the real mainnet and testnet RPC (preview,
   acknowledgement, wrong chain, wallet errors, double clicks, receipt comparison).
