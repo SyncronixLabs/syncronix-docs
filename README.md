@@ -5,7 +5,7 @@
 <h1 align="center">SYNCRONIX Documentation</h1>
 
 <p align="center">
-  How the SYNCRONIX Research Agent works, how to use its public API, and what is live versus planned.<br>
+  How SYNCRONIX works: verified research, Wallet Intelligence, wallet-approved transfers and the public API, and what is live versus planned.<br>
   <a href="https://syncronixai.xyz">Website</a> · <a href="https://syncronixai.xyz/platform#console">Live console</a> · <a href="https://github.com/SyncronixLabs">SyncronixLabs</a>
 </p>
 
@@ -24,6 +24,8 @@
 
 | Document | You will find |
 |---|---|
+| 🚀 [Getting started](getting-started.md) | Five ways in: console, wallet lookup, a transfer, the API, the pattern in your own code; common problems |
+| 📄 [Technical whitepaper](whitepaper.md) | The whole system in one document: design principles, verification, budgets, chain data, transfers, evaluation, limitations |
 | 🏗️ [Architecture](architecture.md) | Components, request flow, data model, deployment shape |
 | 🧠 [Research agent](research-agent.md) | Research protocol, tools, read gate, grounding and source verification, cost ceiling |
 | 🔎 [Wallet Intelligence](wallet-intelligence.md) | Activity, first funder, 5-hop funding trace, shared funders, verified vs. inferred, opt-in AI analysis, indexer limits |
@@ -31,7 +33,8 @@
 | 🔌 [Public API](api.md) | Endpoints, Server-Sent Events, refusal codes, examples |
 | 🎟️ [Usage limits](limits.md) | Limits, what is stored, privacy, fair use |
 | 🛡️ [Security model](security.md) | Threats, controls, known limitations, reporting a vulnerability |
-| 🗺️ [Roadmap](roadmap.md) | What is live, what is planned |
+| 🗺️ [Roadmap](roadmap.md) | What is live, verified milestones, what is planned |
+| 📝 [Changelog](CHANGELOG.md) | What changed in production and in these docs, by date |
 
 ## Start here
 
@@ -55,7 +58,8 @@ curl -N https://syncronixai.xyz/api/runs \
   -d '{"task":"What is the current Node.js Active LTS line and when does it reach end of life?"}'
 ```
 
-The run streams as Server-Sent Events and ends with a `done` event carrying the report and its sources.
+The run streams as Server-Sent Events and ends with a `done` event carrying the report and its sources. Call the API
+from a terminal or your own server; web pages on other websites cannot call it from a browser.
 Reference: [api.md](api.md). Working clients: [syncronix-examples](https://github.com/SyncronixLabs/syncronix-examples).
 
 </details>
@@ -74,9 +78,19 @@ curl -s 'https://syncronixai.xyz/api/chain/wallet?network=mainnet&address=0x…&
 </details>
 
 <details>
+<summary><b>I want to send a transfer</b></summary>
+
+In the Robinhood Chain panel on the [platform page](https://syncronixai.xyz/platform), connect your wallet and type
+`Send 0.001 ETH to 0x…`. You see a preview with the fee and total, confirm it, and sign in your own wallet. One native
+ETH transfer at a time; 0.05 ETH per transfer on mainnet. See [Wallet transfers](wallet-transfers.md).
+
+</details>
+
+<details>
 <summary><b>I want to understand the design</b></summary>
 
-Read [Architecture](architecture.md), then [Research agent](research-agent.md). The measurements behind the design
+Read the [whitepaper](whitepaper.md) for the whole picture, or [Architecture](architecture.md), then
+[Research agent](research-agent.md). The measurements behind the design
 decisions are in [syncronix-research](https://github.com/SyncronixLabs/syncronix-research).
 
 </details>
@@ -106,7 +120,7 @@ decisions are in [syncronix-research](https://github.com/SyncronixLabs/syncronix
 | Repository | |
 |---|---|
 | [syncronix-research](https://github.com/SyncronixLabs/syncronix-research) | Engineering notes with measurements |
-| [syncronix-benchmarks](https://github.com/SyncronixLabs/syncronix-benchmarks) | Research-quality harness and results |
-| [syncronix-examples](https://github.com/SyncronixLabs/syncronix-examples) | Working API clients and a minimal grounded agent |
+| [syncronix-benchmarks](https://github.com/SyncronixLabs/syncronix-benchmarks) | Research-quality and Wallet Intelligence harnesses and results |
+| [syncronix-examples](https://github.com/SyncronixLabs/syncronix-examples) | Working API and wallet clients and a minimal grounded agent |
 
 <sub>Documentation licensed under [CC BY 4.0](LICENSE).</sub>

@@ -39,4 +39,7 @@ history, and the availability of the service.
 ## Reporting a vulnerability
 
 Please report privately through GitHub: on the relevant SyncronixLabs repository, open **Security → Report a
-vulnerability**. Do not open a public issue for security problems.
+vulnerability**. Do not open a public issue for security problems. Scope and what to include: [security policy](.github/SECURITY.md).
+
+The controls above are tested by the project's own automated security, concurrency and browser suites. No external
+security audit is claimed.

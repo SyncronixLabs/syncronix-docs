@@ -26,6 +26,21 @@ Status as of November 2026. Items move from *planned* to *live* only when they r
   per day, origin and input validation.
 - **Operations** — HTTPS, daily database backups, immutable releases with rollback.
 
+## Verified milestones
+
+Each milestone is checked against production, not just shipped. Evidence is public unless it would identify a
+person's wallet.
+
+| Date | Milestone | How it was verified |
+|---|---|---|
+| 2026-11-13 | Research Agent live, free | Production runs; research-quality harness in [syncronix-benchmarks](https://github.com/SyncronixLabs/syncronix-benchmarks) |
+| 2026-11-13 | Hard daily budget under concurrency | Concurrency tests on real PostgreSQL: 25 simultaneous requests for one slot admitted exactly 1 ([note](https://github.com/SyncronixLabs/syncronix-research/blob/main/notes/2026-11-atomic-budget-admission.md)) |
+| 2026-11-17 | Multi-agent verification on every run | Researcher, Analyst and Verifier events in each production run's stream |
+| 2026-11-17 | Robinhood Chain reads (read-only) | Chain ID checked against 4663 / 46630 before use; `GET /api/chain` on production |
+| 2026-11-19 | Wallet Intelligence and Funding Trace | Production measurement on 19 Nov, 5 addresses: newest transaction matched the official RPC 5/5, 379/379 explorer links ([results](https://github.com/SyncronixLabs/syncronix-benchmarks)) |
+| 2026-11-20 | Wallet-approved transfers on testnet | A real wallet-signed transfer read back from the official RPC on chain 46630 |
+| 2026-11-20 | Wallet-approved transfers on mainnet | A real wallet-signed transfer through production read back from the official RPC on chain 4663; sent exactly as previewed. Transaction details kept private |
+
 ## Planned
 
 - **Autonomous AI execution on Robinhood Chain** — policy-bound execution of agent-planned, approved actions on Robinhood Chain, an Ethereum

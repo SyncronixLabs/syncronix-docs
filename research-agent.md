@@ -48,6 +48,24 @@ After the report is written:
 
 Example: `Grounding: 2 pages read in full · 6/8 findings cite a page that was read · 17 cited passages`
 
+## Analyst and Verifier
+
+Every run continues after the Researcher with two more agents, inside the same $0.20 ceiling; part of it is held
+back for them when the Researcher starts:
+
+| Agent | Model | Does |
+|---|---|---|
+| Analyst | `claude-haiku-5-5` | Extracts up to 8 checkable claims from the report, each with a quote copied exactly from a page that was read and that page's URL; unknown URLs are dropped |
+| Verifier (code) | none | Looks for each quote in the stored page text and for sentences on other, independent domains that state the same facts |
+| Verifier (model) | `claude-haiku-5-5` | A fresh call that sees only that evidence and gives each claim a verdict: supported, partial, unsupported or contradicted |
+
+A claim is shown as **verified** only when its quote was found in the page **and** the verdict is *supported*; it is
+*partially supported*, *not verified* or *contradicted* otherwise. The run ends with a line such as
+`Verifier: 5/6 claims verified · quotes matched 6/6 · corroborated by an independent source 4/6`.
+
+This is the research fact check. The opt-in AI wallet brief is different: it gets no Analyst or Verifier, and code
+removes any link or address that is not in its fact sheet ([wallet-intelligence.md](wallet-intelligence.md)).
+
 ## Cost controls
 
 - Each run reserves a **$0.20** ceiling from the daily budget before it starts. A run that pauses mid-turn is not

@@ -3,9 +3,25 @@
 Base URL: `https://syncronixai.xyz`. No key is needed; [limits](limits.md) apply.
 All responses are JSON unless noted. Times are UTC.
 
+## Who can call what
+
+The API is public: no key and no account. It is meant for terminals, scripts and your own server. The server sends no
+CORS headers, and `POST` endpoints accept only requests from syncronixai.xyz itself or requests without browser
+origin headers, so **web pages on other websites cannot call it from a visitor's browser**.
+
+| Endpoint | curl / your server | Web page on another site | Calls a model |
+|---|---|---|---|
+| `GET /api/health`, `/api/runs/quota`, `/api/chain` | ✓ | ✗ (no CORS) | No |
+| `POST /api/runs` | ✓ | ✗ `403 cross_site` | Yes, admitted against your daily run |
+| `GET /api/runs`, `/api/runs/:id` | ✓ with your `sx_owner` cookie | ✗ | No |
+| `GET /api/chain/wallet`, `GET /api/chain/analyze` | ✓ | ✗ (no CORS) | No |
+| `POST /api/chain/analyze` | ✓ | ✗ `403 cross_site` | Yes, admitted against your daily run |
+| `POST /api/chain/execute` | ✓ (preview only) | ✗ `403 cross_site` | No; never signs or sends |
+
 ## `GET /api/health`
 
-Readiness of the agent and its database.
+Readiness of the agent and its database. `publicBeta` in this and the quota response is a legacy field name kept for
+existing clients; it means the free public tier is on.
 
 ```json
 { "ok": true, "agent": { "configured": true, "model": "claude-sonnet-5-5", "webResearch": true },
@@ -145,6 +161,17 @@ recipientIsContract, recipientUnused, warnings[], expiresAt }`. Refusals: `403 e
 `400 bad_address`, `bad_checksum`, `zero_address`, `bad_amount`, `over_limit`, `unsupported`, `not_eth`, `multiple`,
 `ens`, `network_mismatch`, `self_transfer`, `contract_recipient`, `insufficient_funds`, `estimate_failed`. Details:
 [wallet-transfers.md](wallet-transfers.md).
+
+```bash
+curl -s https://syncronixai.xyz/api/chain/execute -H 'content-type: application/json'   -d '{"network":"mainnet","from":"0x…","text":"Send 1 ETH to 0x…"}'
+# {"error":"over_limit","message":"The limit is 0.05 ETH per transfer."}
+
+curl -s https://syncronixai.xyz/api/chain/execute -H 'content-type: application/json'   -d '{"network":"testnet","from":"0x…","text":"Swap 1 ETH for USDC"}'
+# {"error":"unsupported","message":"Only single, immediate ETH transfers are supported: no swaps, contracts, “all/max” amounts or scheduled transfers."}
+```
+
+`GET /api/chain?config=1` reports which networks accept transfers and their caps:
+`{ "execution": { "testnet": true, "mainnet": true, "maxEth": { "testnet": "1", "mainnet": "0.05" } }, "networks": [ … ] }`.
 
 ### Wallet errors
 

@@ -1,6 +1,6 @@
 # Usage limits
 
-The SYNCRONIX Research Agent is free to use, within limits that keep it available to
+SYNCRONIX is free to use, within limits that keep it available to
 everyone and its costs predictable.
 
 ## Limits
@@ -48,10 +48,12 @@ release testing cost $0.0013 and $0.0014. Repeating your own analysis of the sam
 Wallet lookups without AI are not stored; their results are cached in server memory for up to a few minutes
 (24 hours for a proven first funder) to save indexer calls.
 
-Only the browser that created a run can list or open it. There is no account, no tracking script and no wallet.
+Only the browser that created a run can list or open it. There is no account and no tracking script. A wallet is
+needed only to sign a transfer, and it is connected in your browser; SYNCRONIX never receives its keys.
 
 ## Fair use
 
-Research and analysis only. The agent cannot sign, send, buy, trade or execute anything. Wallet analysis describes
-on-chain activity; it never identifies who owns an address. Please do not submit
+The research agents and the AI wallet brief cannot sign, send, buy, trade or execute anything. The only way ETH
+moves is a [wallet transfer](wallet-transfers.md) that you start, preview, confirm and sign in your own wallet.
+Wallet analysis describes on-chain activity; it never identifies who owns an address. Please do not submit
 personal data about other people or secrets; tasks and reports are processed by the AI provider to produce results.
