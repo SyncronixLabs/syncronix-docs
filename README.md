@@ -14,8 +14,8 @@
 > [!NOTE]
 > **Live:** SYNCRONIX at [syncronixai.xyz](https://syncronixai.xyz): Researcher, Analyst and
 > Verifier agents on every run, read-only Robinhood Chain data, Wallet Intelligence, a 5-hop Funding Trace and
-> opt-in AI wallet analysis. **Not live yet:** wallet transfers (disabled). **Planned:** on-chain execution.
-> SYNCRONIX holds no keys and sends no transactions.
+> opt-in AI wallet analysis, and **wallet transfers**: one native ETH transfer at a time that you confirm and sign in
+> your own wallet (mainnet and testnet). **Planned:** autonomous AI execution. SYNCRONIX holds no keys and never signs.
 >
 > SYNCRONIX is an independent project and is not affiliated with, endorsed by or partnered with Robinhood Markets, Inc. or its affiliates. Robinhood and Robinhood Chain are trademarks of their respective owners.
 
@@ -26,6 +26,7 @@
 | 🏗️ [Architecture](architecture.md) | Components, request flow, data model, deployment shape |
 | 🧠 [Research agent](research-agent.md) | Research protocol, tools, read gate, grounding and source verification, cost ceiling |
 | 🔎 [Wallet Intelligence](wallet-intelligence.md) | Activity, first funder, 5-hop funding trace, shared funders, verified vs. inferred, opt-in AI analysis, indexer limits |
+| 💸 [Wallet transfers](wallet-transfers.md) | Execution v1: instruction rules, checks, preview, confirmation, receipt check, limits |
 | 🔌 [Public API](api.md) | Endpoints, Server-Sent Events, refusal codes, examples |
 | 🎟️ [Usage limits](limits.md) | Limits, what is stored, privacy, fair use |
 | 🛡️ [Security model](security.md) | Threats, controls, known limitations, reporting a vulnerability |

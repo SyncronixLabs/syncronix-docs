@@ -18,16 +18,16 @@ Status as of November 2026. Items move from *planned* to *live* only when they r
   analysis, comparison with up to 2 addresses, interactive graph separating verified transfers from inferred links.
 - **AI wallet analysis (opt-in)** — a brief written from the deterministic data, only after an explicit click and a
   cost estimate, inside the same per-visitor and daily budgets.
+- **Wallet transfers (Execution v1)** — one native ETH transfer at a time on mainnet and testnet: deterministic
+  instruction parsing, server preview with live balance and gas, explicit confirmation, signing only in the user's
+  own wallet, receipt checked against the preview. [Details](wallet-transfers.md).
 - **Cost and abuse controls** — atomic daily budget with per-run reserves, one run at a time, one run per visitor
   per day, origin and input validation.
 - **Operations** — HTTPS, daily database backups, immutable releases with rollback.
 
 ## Planned
 
-- **Wallet transfers (built, disabled in production)** — transactions built in the browser and signed only in the user's own
-  EIP-1193 wallet, with a review step and a separate wallet approval for each one. The server never holds keys.
-  Enabled only after a real transaction is verified end to end.
-- **Execution on Robinhood Chain** — policy-bound execution of approved actions on Robinhood Chain, an Ethereum
+- **Autonomous AI execution on Robinhood Chain** — policy-bound execution of agent-planned, approved actions on Robinhood Chain, an Ethereum
   Layer 2 built on Arbitrum, with simulation before signing and a receipt for every action.
 - **Accounts and higher limits** beyond the free tier.
 

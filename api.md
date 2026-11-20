@@ -135,6 +135,17 @@ it uses the visitor's daily run and the shared daily budget. Response:
 `{ id, result, costUsd, estimatedUsd, model, usage, check: { removedLinks, removedAddresses, links }, durationMs }`,
 or `{ id, reused: true, result, costUsd: 0 }` when your identical analysis of unchanged data is replayed.
 
+### `POST /api/chain/execute`
+
+Preview of one wallet transfer. **Read-only: never signs or sends.** Same-site only.
+Body (JSON, strings only): `{ "network", "from", "text" }` or `{ "network", "from", "to", "amount" }`.
+Response: `{ intent, quote }` with `quote` = `{ network, chainId, from, to, valueWei, amountEth, gasEstimate, gasLimit,
+maxFeePerGasWei, maxPriorityFeePerGasWei, estFeeEth, maxFeeEth, totalMaxEth, balanceEth, balanceAfterMinEth,
+recipientIsContract, recipientUnused, warnings[], expiresAt }`. Refusals: `403 execution_disabled` / `mainnet_disabled`,
+`400 bad_address`, `bad_checksum`, `zero_address`, `bad_amount`, `over_limit`, `unsupported`, `not_eth`, `multiple`,
+`ens`, `network_mismatch`, `self_transfer`, `contract_recipient`, `insufficient_funds`, `estimate_failed`. Details:
+[wallet-transfers.md](wallet-transfers.md).
+
 ### Wallet errors
 
 | HTTP | `error` | Meaning |

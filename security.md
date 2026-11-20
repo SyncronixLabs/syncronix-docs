@@ -24,7 +24,7 @@ history, and the availability of the service.
 | Indexer misuse (SSRF, cost) | Fixed allowlist of indexer paths and validated query parameters; per-lookup call budgets, a daily call allowance and a floor on the indexer's remaining credits; 30 lookups and 6 traces per minute per visitor, 3 traces at once. |
 | Unwanted AI spend | Wallet data and graphs never call a model. `GET /api/chain/analyze` returns an estimate only; `POST` is same-site only, sent only from an explicit click, and admitted atomically against the per-visitor and daily budgets. |
 | Hallucinated wallet facts | The AI receives only a fact sheet built in code; links and addresses in its answer that are not in the fact sheet are removed before display. Labels from explorers are sanitised and treated as data. |
-| Wallet transactions | Disabled in production. The server holds no keys and cannot sign or broadcast. |
+| Wallet transfers | No server keys; the RPC client allows read methods only, so the server cannot sign or broadcast. The user's wallet signs after an explicit confirmation; one wallet request per click; previewed chain, account and values enforced; mainnet capped at 0.05 ETH, contract recipients refused, enabled only by two separate server settings. [Details](wallet-transfers.md). |
 
 ## Known limitations
 
