@@ -327,6 +327,9 @@ a single run per configuration.
   - parser and checksum vectors;
   - the mainnet configuration matrix;
   - the browser flow with a mock wallet against the real RPC.
+- *Public API conformance* on 21 Nov 2026: 30/30 documented refusals and same-site checks behaved as documented on
+  production. A successful preview had a gas limit of estimate + 20 %, a fee cap of 2 × gas price and no tip, and it
+  expired after 60 s ([benchmark](https://github.com/SyncronixLabs/syncronix-benchmarks#api-conformance)).
 
 ## 11. Limitations
 

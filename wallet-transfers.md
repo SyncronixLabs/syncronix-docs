@@ -46,6 +46,12 @@ conditional transfers, `.eth` names, several recipients, a mismatched checksum.
 
 Previews count toward the 30 chain lookups per minute per visitor. The preview endpoint is same-site only.
 
+**Measured headroom** (20–21 Nov 2026, official RPC): the mainnet base fee stayed under the 2× fee cap in 287 of 288
+sampled 60 s windows over 24 hours and in all 1,581 live windows. One burst exceeded it from 12 s and peaked at
+3.97×. A transfer confirmed in such a burst cannot be included while the base fee is above its cap; nothing
+moves and no fee is paid. The gas estimate for a plain transfer was 21,000 with a zero L1 component throughout.
+Details: [research note](https://github.com/SyncronixLabs/syncronix-research/blob/main/notes/2026-11-fee-headroom.md).
+
 ## Safety properties
 
 - No server-side keys; the server never signs or broadcasts. The RPC client allows read methods only.

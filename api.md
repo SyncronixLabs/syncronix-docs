@@ -157,9 +157,31 @@ Preview of one wallet transfer. **Read-only: never signs or sends.** Same-site o
 Body (JSON, strings only): `{ "network", "from", "text" }` or `{ "network", "from", "to", "amount" }`.
 Response: `{ intent, quote }` with `quote` = `{ network, chainId, from, to, valueWei, amountEth, gasEstimate, gasLimit,
 maxFeePerGasWei, maxPriorityFeePerGasWei, estFeeEth, maxFeeEth, totalMaxEth, balanceEth, balanceAfterMinEth,
-recipientIsContract, recipientUnused, warnings[], expiresAt }`. Refusals: `403 execution_disabled` / `mainnet_disabled`,
-`400 bad_address`, `bad_checksum`, `zero_address`, `bad_amount`, `over_limit`, `unsupported`, `not_eth`, `multiple`,
-`ens`, `network_mismatch`, `self_transfer`, `contract_recipient`, `insufficient_funds`, `estimate_failed`. Details:
+recipientIsContract, recipientUnused, warnings[], expiresAt }`.
+
+Refusals, as `{ "error": code, "message": … }`:
+
+| HTTP | `error` | Cause |
+|---|---|---|
+| 400 | `bad_network` | `network` is not `mainnet` or `testnet` |
+| 403 | `execution_disabled`, `mainnet_disabled` | Transfers are switched off on that network |
+| 400 | `bad_sender` | `from` is not a valid address (no wallet connected) |
+| 400 | `empty`, `too_long`, `unrecognized` | No instruction, over 200 characters, or not one of the supported sentence forms |
+| 400 | `unsupported`, `not_eth`, `multiple`, `ens` | Swaps, `all`/`max`, schedules and conditions; tokens; more than one recipient; `.eth` names |
+| 400 | `bad_address`, `bad_checksum`, `zero_address` | Malformed recipient, failed [EIP-55](https://eips.ethereum.org/EIPS/eip-55) checksum, or the zero address |
+| 400 | `bad_amount`, `over_limit` | Not a positive amount with up to 18 decimals; above the network's cap |
+| 400 | `network_mismatch`, `self_transfer` | The instruction names the other network; sender and recipient are the same |
+| 400 | `contract_recipient`, `insufficient_funds`, `estimate_failed` | After reading the chain: contract recipient on mainnet; balance below the amount plus the most the fee can cost; the network would reject it |
+| 400 | `bad_json`, `bad_request` | Body is not JSON, has unexpected fields, or mixes `text` with `to`/`amount` |
+| 403 | `cross_site` | Sent from a web page on another website |
+| 415 | `bad_content_type` | Not `application/json` |
+| 429 | `rate_limited` | Over 30 chain lookups per minute; includes `Retry-After` |
+| 413 | `too_large` | Body over the size limit |
+| 502 / 503 | `rpc_unavailable`, `disabled` | The official RPC could not be read; chain reads are switched off |
+
+Every code above except `execution_disabled`, `mainnet_disabled`, `contract_recipient`, `insufficient_funds`,
+`estimate_failed`, `rate_limited`, `too_large`, `rpc_unavailable` and `disabled` is checked against production by the
+[API conformance benchmark](https://github.com/SyncronixLabs/syncronix-benchmarks#api-conformance). Details:
 [wallet-transfers.md](wallet-transfers.md).
 
 ```bash

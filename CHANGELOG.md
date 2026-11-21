@@ -4,6 +4,21 @@ What changed in production at [syncronixai.xyz](https://syncronixai.xyz) and in 
 Dates are UTC and come from the commit history of the SyncronixLabs repositories. An entry under *Production* means
 it runs at syncronixai.xyz.
 
+## 2026-11-21
+
+**Documentation**
+
+- [api.md](api.md): the transfer preview's refusals are now one complete table (it was missing `bad_network`,
+  `bad_sender`, `empty`, `too_long`, `unrecognized`, `bad_json`, `bad_content_type`, `too_large`, `rate_limited`,
+  `rpc_unavailable` and `disabled`). The table is checked against production by the new
+  [API conformance benchmark](https://github.com/SyncronixLabs/syncronix-benchmarks#api-conformance) (30/30 cases).
+- New benchmarks, a transfer example and a research note; see the entries in
+  [syncronix-benchmarks](https://github.com/SyncronixLabs/syncronix-benchmarks/blob/main/CHANGELOG.md),
+  [syncronix-examples](https://github.com/SyncronixLabs/syncronix-examples/blob/main/CHANGELOG.md) and
+  [syncronix-research](https://github.com/SyncronixLabs/syncronix-research/blob/main/CHANGELOG.md).
+
+No production change.
+
 ## 2026-11-20
 
 **Production**
