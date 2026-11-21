@@ -11,6 +11,17 @@
 
 ---
 
+## $SNX contract address
+
+The official $SNX token contract on **Robinhood Chain mainnet** (chain ID 4663), as shown on
+[syncronixai.xyz](https://syncronixai.xyz):
+
+```text
+0x209f94e370c6870aea4c74240fe0cae7ef358059
+```
+
+Always compare the full address before you use it.
+
 > [!NOTE]
 > **Live:** SYNCRONIX at [syncronixai.xyz](https://syncronixai.xyz): Researcher, Analyst and
 > Verifier agents on every run, read-only Robinhood Chain data, Wallet Intelligence, a 5-hop Funding Trace and

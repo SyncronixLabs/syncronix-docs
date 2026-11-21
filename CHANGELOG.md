@@ -8,6 +8,7 @@ it runs at syncronixai.xyz.
 
 **Documentation**
 
+- Added the official $SNX contract address (Robinhood Chain mainnet) to the README.
 - [api.md](api.md): the transfer preview's refusals are now one complete table (it was missing `bad_network`,
   `bad_sender`, `empty`, `too_long`, `unrecognized`, `bad_json`, `bad_content_type`, `too_large`, `rate_limited`,
   `rpc_unavailable` and `disabled`). The table is checked against production by the new
