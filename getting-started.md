@@ -26,9 +26,9 @@ You get one research run per day; it resets at 00:00 UTC. How checking works: [r
 
 1. On the [platform page](https://syncronixai.xyz/platform), enter an address in **Address lookup**.
 2. Pick **Activity** (history, inflows and outflows, contracts) or **Funding trace** (first funder and up to 5 hops
-   upstream). No AI is used, and it does not use your daily run.
+   upstream). No AI is used, and it does not use any AI allowance.
 3. Optional: **Analyze with AI** first shows the estimated and maximum cost. It makes one model call only if you click
-   it, and it counts as your daily run.
+   it, and it uses one of your 3 daily AI wallet analyses (separate from your research run).
 
 Read *verified* edges as on-chain transfers with a link, and *inferred* edges as patterns, never as proof of
 ownership. Details: [wallet-intelligence.md](wallet-intelligence.md).

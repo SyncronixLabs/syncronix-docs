@@ -1,7 +1,8 @@
 # SYNCRONIX Technical Whitepaper
 
-**Version 1.0 · November 2026.** Describes the production system at [syncronixai.xyz](https://syncronixai.xyz) as
-deployed on 20 November 2026 (application release `926b089`). Every number is measured or configured, and its source
+**Version 1.1 · November 2026.** Describes the production system at [syncronixai.xyz](https://syncronixai.xyz) as
+deployed on 20 November 2026 (application release `926b089`), with the usage limits of 21 November 2026 (release
+`a4e1cdf`, §6). Every number is measured or configured, and its source
 is linked. What is planned is labelled *planned* and is not described as working.
 
 > SYNCRONIX is an independent project and is not affiliated with, endorsed by or partnered with Robinhood Markets,
@@ -184,18 +185,21 @@ are flagged. Each source is labelled *read* or *seen*. A grounding line summaris
 
 ## 6. Admission and cost control
 
-Every paid call is admitted in one PostgreSQL transaction under an advisory lock. Admission checks the shared daily
-budget including the reserves of runs in progress, one active run across the service, and one run per visitor per
-day. An admitted run reserves its $0.20 ceiling, and part of it is held back for the Analyst and Verifier. When the
+Every paid call is admitted in one PostgreSQL transaction under an advisory lock. Research runs and AI wallet
+analyses have separate daily budgets, allowances and concurrency. Admission checks the budget for that kind, a
+monthly hard cap, and per-visitor and per-network limits. Every budget check includes the reserves of work in
+progress. An admitted run reserves its $0.20 ceiling, and part of it is held back for the Analyst and Verifier. When the
 run ends, its real cost replaces the reserve in the same statement. A run cut off by a crash keeps its full reserve
 as its cost.
 
 | Limit | Value |
 |---|---|
-| Shared daily budget (model + search) | $0.50, resets 00:00 UTC |
-| Ceiling per run | $0.20 |
-| Runs in progress across the service | 1 |
-| Runs per visitor (IPv4 address or IPv6 /64) | 1 per day |
+| Daily AI budget (model + search) | $3.00: $2.75 research, $0.25 AI wallet analysis; released in 4 steps (00, 06, 12, 18 UTC) |
+| Monthly hard cap | $60, including in-flight reserves |
+| Ceiling per research run | $0.20 |
+| In progress across the service | 1 research run, 2 AI wallet analyses |
+| Per visitor (IPv4 address or IPv6 /64) per day | 1 research run, 3 AI wallet analyses, $0.30 of AI usage |
+| Per wider network (IPv4 /24, IPv6 /48) per day | 6 AI runs |
 | Identical repeat by the same browser within 60 min | replayed at $0 |
 
 Concurrency tests against real PostgreSQL showed the following:

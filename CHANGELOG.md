@@ -6,7 +6,21 @@ it runs at syncronixai.xyz.
 
 ## 2026-11-21
 
+**Production**
+
+- **More AI capacity, with hard limits.** The daily AI budget is now $3.00 ($2.75 for research, $0.25 for AI wallet
+  analyses), released in 4 steps through the day. A $60 monthly hard cap applies, and every budget check includes
+  the reserves of work in progress.
+- **Separate allowances.** AI wallet analyses no longer use your research run: 1 research run and 3 AI wallet analyses
+  per visitor per day, with 1 and 2 in progress across the service.
+- **Fair-use limits.** $0.30 of AI usage per visitor per day, and 6 AI runs per wider network (IPv4 /24, IPv6 /48) per
+  day.
+- **Clearer messages.** The console and the API say which limit applies and when it lifts.
+
 **Documentation**
+
+- [limits.md](limits.md) and [api.md](api.md) describe the new limits, the per-kind quota response and the new
+  refusal codes. The whitepaper (§6), getting started and Wallet Intelligence pages are updated to match.
 
 - Added the official $SNX contract address (Robinhood Chain mainnet) to the README.
 - [api.md](api.md): the transfer preview's refusals are now one complete table (it was missing `bad_network`,
@@ -17,8 +31,6 @@ it runs at syncronixai.xyz.
   [syncronix-benchmarks](https://github.com/SyncronixLabs/syncronix-benchmarks/blob/main/CHANGELOG.md),
   [syncronix-examples](https://github.com/SyncronixLabs/syncronix-examples/blob/main/CHANGELOG.md) and
   [syncronix-research](https://github.com/SyncronixLabs/syncronix-research/blob/main/CHANGELOG.md).
-
-No production change.
 
 ## 2026-11-20
 

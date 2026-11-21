@@ -115,9 +115,9 @@ the explorer, not as an identification.
 
 | Budget control | Value |
 |---|---|
-| Counts toward | Your daily run (the same 1 per day as research runs) and the shared $0.50 daily budget |
+| Counts toward | Your 3 AI wallet analyses per day (separate from your research run) and the $0.25 daily AI wallet analysis budget, released in 4 steps, inside the $60 monthly cap |
 | Reserve held while running | Twice the maximum estimate, at least $0.005 and at most $0.20 |
-| Runs in progress across the service | 1 (shared with research runs) |
+| Analyses in progress across the service | 2 (separate from research runs) |
 | Same browser, same address, unchanged data within 60 minutes | Saved brief replayed at $0 |
 | Empty or cut-off answer | Recorded as failed with its real cost; nothing partial is shown |
 

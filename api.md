@@ -12,10 +12,10 @@ origin headers, so **web pages on other websites cannot call it from a visitor's
 | Endpoint | curl / your server | Web page on another site | Calls a model |
 |---|---|---|---|
 | `GET /api/health`, `/api/runs/quota`, `/api/chain` | ✓ | ✗ (no CORS) | No |
-| `POST /api/runs` | ✓ | ✗ `403 cross_site` | Yes, admitted against your daily run |
+| `POST /api/runs` | ✓ | ✗ `403 cross_site` | Yes, admitted against your daily research run and the research budget |
 | `GET /api/runs`, `/api/runs/:id` | ✓ with your `sx_owner` cookie | ✗ | No |
 | `GET /api/chain/wallet`, `GET /api/chain/analyze` | ✓ | ✗ (no CORS) | No |
-| `POST /api/chain/analyze` | ✓ | ✗ `403 cross_site` | Yes, admitted against your daily run |
+| `POST /api/chain/analyze` | ✓ | ✗ `403 cross_site` | Yes, admitted against your daily AI wallet analyses and their budget |
 | `POST /api/chain/execute` | ✓ (preview only) | ✗ `403 cross_site` | No; never signs or sends |
 
 ## `GET /api/health`
@@ -30,15 +30,21 @@ existing clients; it means the free public tier is on.
 
 ## `GET /api/runs/quota`
 
-What this visitor can do today.
+What this visitor can do now. The top-level fields describe research runs; `research` and `walletAi` describe both
+kinds.
 
 ```json
 { "publicBeta": true, "admin": false, "runsPerDay": 1, "runsLeft": 1, "busy": false,
-  "budgetUsedUp": false, "budgetHeld": false, "resetsAt": "2026-11-14T00:00:00.000Z" }
+  "budgetUsedUp": false, "budgetHeld": false, "paced": false, "blocked": null, "resumesAt": null,
+  "resetsAt": "2026-11-22T00:00:00.000Z",
+  "research": { "perDay": 1, "left": 1, "available": true, "blocked": null, "resumesAt": null },
+  "walletAi": { "perDay": 3, "left": 3, "available": true, "blocked": null, "resumesAt": null } }
 ```
 
-`busy`: a run is in progress (one runs at a time). `budgetHeld`: the rest of today's budget is reserved by a run in
-progress. `budgetUsedUp`: no run can start until `resetsAt`.
+- `blocked` is why that kind can't start now, or `null`: `busy`, `ip_quota`, `subnet_quota`, `visitor_budget`,
+  `daily_budget`, `budget_reserved`, `budget_paced` or `monthly_budget` (see the refusal table below).
+- `resumesAt` is when that limit lifts: the next budget release, the next 00:00 UTC, or the next month.
+- `budgetUsedUp`, `budgetHeld` and `paced` repeat research's `blocked` as booleans, for older clients.
 
 ## `POST /api/runs`
 
@@ -74,9 +80,15 @@ The first response sets an httpOnly `sx_owner` cookie (scoped to `/api`). Send i
 | 403 | `cross_site` | Started from another website |
 | 413 | `too_large` | Body over 16 KB |
 | 415 | `bad_content_type` | Not JSON |
-| 429 | `ip_quota` | Today's free run is used; includes `resetsAt` and `Retry-After` |
-| 429 | `daily_budget` | Today's shared budget is used up; includes `resetsAt` |
-| 503 | `busy`, `budget_reserved` | Another run is in progress; includes `Retry-After` |
+| 429 | `ip_quota` | Today's research run is used |
+| 429 | `subnet_quota` | Your wider network (IPv4 /24, IPv6 /48) has used today's 6 AI runs |
+| 429 | `visitor_budget` | Your network has used today's $0.30 of AI usage |
+| 429 | `budget_paced` | Today's research budget is released in steps; `resetsAt` is the next step |
+| 429 | `daily_budget` | Today's research budget is used up |
+| 429 | `monthly_budget` | This month's $60 AI budget is used up; `resetsAt` is the 1st of next month |
+| 503 | `busy`, `budget_reserved` | Another run is in progress, or the rest of the budget is held by work in progress; includes `Retry-After` |
+
+Every 429 includes `resetsAt` and `Retry-After`.
 
 Failures during a run arrive as a `failed` event, for example `timeout`, `rate_limited`, `provider_error`,
 `budget` (cost ceiling), `cancelled`.
@@ -140,14 +152,15 @@ The cost estimate for an AI analysis. **Makes no model call.**
 ```json
 { "model": "claude-haiku-5-5", "inputTokens": 4361, "maxOutputTokens": 3000, "estimatedUsd": 0.00114,
   "maxUsd": 0.00202, "reserveUsd": 0.005, "facts": { "lines": 29, "links": 15 }, "aiConfigured": true,
-  "quota": { "runsPerDay": 1, "runsLeft": 1, "busy": false, "budgetAvailable": true, "resetsAt": "…" } }
+  "quota": { "kind": "wallet_ai", "runsPerDay": 3, "runsLeft": 3, "busy": false, "budgetAvailable": true,
+             "blocked": null, "resumesAt": null, "resetsAt": "…" } }
 ```
 
 ### `POST /api/chain/analyze`
 
 Starts **one** billed AI analysis. The console sends it only when a visitor clicks **Analyze with AI**.
 Body: `{ "network", "address", "compare"?, "fresh"? }` (JSON, same-site only). It is admitted like a research run:
-it uses the visitor's daily run and the shared daily budget. Response:
+it uses one of the visitor's 3 daily AI wallet analyses and the AI wallet analysis budget, separate from research. Response:
 `{ id, result, costUsd, estimatedUsd, model, usage, check: { removedLinks, removedAddresses, links }, durationMs }`,
 or `{ id, reused: true, result, costUsd: 0 }` when your identical analysis of unchanged data is replayed.
 
@@ -202,7 +215,7 @@ curl -s https://syncronixai.xyz/api/chain/execute -H 'content-type: application/
 | 400 | `bad_address`, `bad_compare` | Not a 0x address, or more than 2 compare addresses |
 | 403 | `cross_site` | Analysis started from another website |
 | 429 | `rate_limited` | Over 30 chain lookups or 6 traces per minute; includes `Retry-After` |
-| 429 / 503 | `ip_quota`, `daily_budget`, `busy`, `budget_reserved` | Analysis not admitted, as for research runs |
+| 429 / 503 | `ip_quota`, `subnet_quota`, `visitor_budget`, `budget_paced`, `daily_budget`, `monthly_budget`, `busy`, `budget_reserved` | Analysis not admitted. Same codes as for research runs, but checked against the AI wallet analysis allowance (3 per day) and budget ($0.25 per day) |
 | 503 | `busy` | 3 traces already running; includes `Retry-After` |
 | 503 | `daily_limit`, `budget`, `indexer_unavailable`, `indexer_rate_limited` | Today's indexed-read allowance is used, or the indexer is unavailable |
 | 502 | `indexer_unreachable`, `indexer_error` | The indexer could not be reached or returned an error |
